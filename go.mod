@@ -1,4 +1,4 @@
-module base
+module github.com/startzerokong/basego
 
 go 1.14
 
