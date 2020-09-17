@@ -1,8 +1,8 @@
 package response
 
 import (
-	"base/define"
 	"github.com/gin-gonic/gin"
+	"github.com/startzerokong/basego/define"
 	"net/http"
 )
 
