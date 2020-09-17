@@ -7,6 +7,10 @@ import (
 	"time"
 )
 
+func InitRedis() *redis.Client {
+	return GetRedisConnect()
+}
+
 func GetRedisConnect() *redis.Client {
 	redisConfig := util.GetRedisConfig()
 
