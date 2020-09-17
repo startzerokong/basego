@@ -4,14 +4,14 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
-func getDBPool() *ConnectPool {
+func GetDBPool() *ConnectPool {
 	return GetConnect()
 }
 
-func getReadConn() *gorm.DB {
-	return getDBPool().ReadDB
+func GetReadConn() *gorm.DB {
+	return GetDBPool().ReadDB
 }
 
-func getWriteConn() *gorm.DB {
-	return getDBPool().WriteDB
+func GetWriteConn() *gorm.DB {
+	return GetDBPool().WriteDB
 }
