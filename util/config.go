@@ -8,6 +8,10 @@ import (
 	"os"
 )
 
+func getMemCachePath() ([]byte, error) {
+	return getPath("/config/memcache.yml")
+}
+
 func getRedisPath() ([]byte, error) {
 	return getPath("/config/redis.yml")
 }
@@ -26,6 +30,10 @@ func getPath(path string) ([]byte,error) {
 	}
 
 	return ioutil.ReadFile(realPath)
+}
+
+func GetMemCacheConfig() *define.MemCache {
+
 }
 
 func GetRedisConfig() *define.Redis {
