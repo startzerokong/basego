@@ -28,3 +28,11 @@ func StringToInt64(key string) (int64, error) {
 	return value, nil
 }
 
+func StringToByte(key string) []byte {
+	return []byte(key)
+}
+
+func ByteToString(key []byte) string {
+	return string(key)
+}
+

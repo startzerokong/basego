@@ -33,7 +33,27 @@ func getPath(path string) ([]byte,error) {
 }
 
 func GetMemCacheConfig() *define.MemCache {
+	type envConfig struct {
+		Product  interface{} `yaml:"product"`
+		Preline  interface{} `yaml:"preline"`
+		Develop  interface{} `yaml:"develop"`
+		Test     interface{} `yaml:"test"`
+		UnitTest interface{} `yaml:"unit_test"`
+	}
 
+	configFile, _ := getMemCachePath()
+
+	var config envConfig
+
+	err := yaml.Unmarshal(configFile, &config)
+	if err != nil {
+
+	}
+
+	retConfig := define.MemCache{}
+	err = mapstructure.Decode(config.Product, &retConfig)
+
+	return &retConfig
 }
 
 func GetRedisConfig() *define.Redis {
