@@ -104,3 +104,38 @@ func GetDbConfig() *define.Db {
 
 	return &retConfig
 }
+
+func GetConfig(configType string) interface{} {
+	type envConfig struct {
+		Product  interface{} `yaml:"product"`
+		Preline  interface{} `yaml:"preline"`
+		Develop  interface{} `yaml:"develop"`
+		Test     interface{} `yaml:"test"`
+		UnitTest interface{} `yaml:"unit_test"`
+	}
+
+	var configFile []byte
+	var retConfig interface{}
+
+	if configType == "db" {
+		configFile, _ = getDbPath()
+		retConfig = define.Db{}
+	} else if configType == "redis" {
+		configFile, _ = getRedisPath()
+		retConfig = define.Redis{}
+	} else if configType == "memcache" {
+		configFile, _ = getMemCachePath()
+		retConfig = define.MemCache{}
+	}
+
+	var config envConfig
+
+	err := yaml.Unmarshal(configFile, &config)
+	if err != nil {
+
+	}
+
+	err = mapstructure.Decode(config.Product, &retConfig)
+
+	return &retConfig
+}
