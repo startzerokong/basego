@@ -1,10 +1,9 @@
 package util
 
 import (
-	"crypto/md5"
-	"encoding/hex"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/startzerokong/basego/encryption"
 	"time"
 )
 
@@ -36,9 +35,7 @@ func RequestId() string {
 
 	randomData := fmt.Sprintf("%s-%s", Uniqid(""), string(randomByte))
 
-	md5Ret := md5.New()
-	md5Ret.Write([]byte(randomData))
-	result := hex.EncodeToString(md5Ret.Sum(nil))
+	result := encryption.DoMd5(randomData)
 
 	return result
 }
