@@ -2,6 +2,7 @@ package sign
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/startzerokong/basego/define"
 	"github.com/startzerokong/basego/encryption"
 	"github.com/startzerokong/basego/request"
 	"github.com/startzerokong/basego/response"
@@ -35,13 +36,13 @@ func CheckSign() gin.HandlerFunc {
 		sign := request.GetQuery(ctx, "sign")
 
 		if len(sign) == 0 {
-			response.WrongResponse(ctx, 10000, "wrong")
+			response.WrongResponse(ctx, 9999998, define.Message("9999998"))
 		}
 
 		buildSign := BuildUrlWithSalt(ctx)
 
 		if sign != buildSign {
-			response.WrongResponse(ctx, 10000, "wrong")
+			response.WrongResponse(ctx, 9999998, define.Message("9999998"))
 		}
 	}
 }
