@@ -6,7 +6,7 @@ import (
 )
 
 func GetCurrentFileName() string {
-	_, file, _, _ := runtime.Caller(0)
+	_, file, _, _ := runtime.Caller(1)
 	filename := path.Base(file)
 	return filename
 }
