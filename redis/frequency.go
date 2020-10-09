@@ -1,6 +1,9 @@
 package redis
 
-import "github.com/startzerokong/basego/util"
+import (
+	"github.com/startzerokong/basego/util"
+	"time"
+)
 
 const FrequencyKey = "FREQUENCY::"
 
@@ -12,7 +15,7 @@ func IncrByIp(ip string) int64 {
 	}
 	if ret == 1 {
 		config := util.GetIpFrequencyConfig()
-		expire := config.Expire
+		expire := time.Minute * time.Duration(config.Expire)
 		Expire(key, expire)
 	}
 	return ret

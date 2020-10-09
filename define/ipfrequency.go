@@ -1,8 +1,6 @@
 package define
 
-import "time"
-
 type Ip struct {
-	Expire time.Duration `mapstructure:"expire,omitempty"`
+	Expire int `mapstructure:"expire,omitempty"`
 	Limit int64 `mapstructure:"limit,omitempty"`
 }
