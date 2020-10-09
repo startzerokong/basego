@@ -5,8 +5,14 @@ import (
 	"runtime"
 )
 
-func GetFileName() string {
+func GetCurrentFileName() string {
 	_, file, _, _ := runtime.Caller(0)
+	filename := path.Base(file)
+	return filename
+}
+
+func GetCallFileName() string {
+	_, file, _, _ := runtime.Caller(3)
 	filename := path.Base(file)
 	return filename
 }
