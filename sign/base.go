@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/startzerokong/basego/encryption"
 	"github.com/startzerokong/basego/request"
+	"github.com/startzerokong/basego/response"
 )
 
 const salt = "let-eat-together"
@@ -35,7 +36,7 @@ func CheckSign(ctx *gin.Context) bool {
 	buildSign := BuildUrlWithSalt(ctx)
 
 	if sign != buildSign {
-		return false
+		response.WrongResponse(ctx, 10000, "wrong")
 	}
 
 	return true
