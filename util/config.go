@@ -24,6 +24,10 @@ func getIpFrequencyPath() ([]byte, error) {
 	return getPath("/config/ipfrequency.yml")
 }
 
+func getUserFrequencyPath() ([]byte, error) {
+	return getPath("/config/userfrequency.yml")
+}
+
 func getPath(path string) ([]byte,error) {
 	nowPath ,_ := os.Getwd()
 	realPath := nowPath + path
@@ -128,6 +132,30 @@ func GetIpFrequencyConfig() *define.Ip {
 	}
 
 	retConfig := define.Ip{}
+	err = mapstructure.Decode(config.Product, &retConfig)
+
+	return &retConfig
+}
+
+func GetUserFrequencyConfig() *define.User {
+	type envConfig struct {
+		Product  interface{} `yaml:"product"`
+		Preline  interface{} `yaml:"preline"`
+		Develop  interface{} `yaml:"develop"`
+		Test     interface{} `yaml:"test"`
+		UnitTest interface{} `yaml:"unit_test"`
+	}
+
+	configFile, _ := getUserFrequencyPath()
+
+	var config envConfig
+
+	err := yaml.Unmarshal(configFile, &config)
+	if err != nil {
+
+	}
+
+	retConfig := define.User{}
 	err = mapstructure.Decode(config.Product, &retConfig)
 
 	return &retConfig
