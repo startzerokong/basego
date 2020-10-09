@@ -20,6 +20,10 @@ func getDbPath() ([]byte, error) {
 	return getPath("/config/mysql.yml")
 }
 
+func getIpFrequencyPath() ([]byte, error) {
+	return getPath("/config/ipfrequency.yml")
+}
+
 func getPath(path string) ([]byte,error) {
 	nowPath ,_ := os.Getwd()
 	realPath := nowPath + path
@@ -100,6 +104,30 @@ func GetDbConfig() *define.Db {
 	}
 
 	retConfig := define.Db{}
+	err = mapstructure.Decode(config.Product, &retConfig)
+
+	return &retConfig
+}
+
+func GetIpFrequencyConfig() *define.Ip {
+	type envConfig struct {
+		Product  interface{} `yaml:"product"`
+		Preline  interface{} `yaml:"preline"`
+		Develop  interface{} `yaml:"develop"`
+		Test     interface{} `yaml:"test"`
+		UnitTest interface{} `yaml:"unit_test"`
+	}
+
+	configFile, _ := getIpFrequencyPath()
+
+	var config envConfig
+
+	err := yaml.Unmarshal(configFile, &config)
+	if err != nil {
+
+	}
+
+	retConfig := define.Ip{}
 	err = mapstructure.Decode(config.Product, &retConfig)
 
 	return &retConfig
