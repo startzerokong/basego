@@ -7,7 +7,7 @@ import (
 	"github.com/startzerokong/basego/util"
 )
 
-func CheckSign() gin.HandlerFunc {
+func CheckFrequency() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		realIp := util.RealIp(ctx)
 		count := redis.IncrByIp(realIp)
