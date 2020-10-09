@@ -30,14 +30,18 @@ func BuildUrlWithSalt(ctx *gin.Context) string {
 	return encryption.DoMd5(BuildUrl(ctx) + salt)
 }
 
-func CheckSign(ctx *gin.Context) bool {
-	sign := request.GetQuery(ctx, "sign")
+func CheckSign() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		sign := request.GetQuery(ctx, "sign")
 
-	buildSign := BuildUrlWithSalt(ctx)
+		if len(sign) == 0 {
+			response.WrongResponse(ctx, 10000, "wrong")
+		}
 
-	if sign != buildSign {
-		response.WrongResponse(ctx, 10000, "wrong")
+		buildSign := BuildUrlWithSalt(ctx)
+
+		if sign != buildSign {
+			response.WrongResponse(ctx, 10000, "wrong")
+		}
 	}
-
-	return true
 }
