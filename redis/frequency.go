@@ -7,9 +7,8 @@ import (
 
 const FrequencyKey = "FREQUENCY::"
 
-func IncrByIp(ip string) int64 {
-	filename := util.GetCurrentFileName()
-	key := FrequencyKey + filename + ip
+func IncrByIp(ip, fileName string) int64 {
+	key := FrequencyKey + fileName + ip
 	ret, err := IncrBy(key, 1)
 	if err != nil {
 		return 0

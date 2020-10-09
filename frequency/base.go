@@ -11,7 +11,8 @@ import (
 func CheckFrequency() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		realIp := util.RealIp(ctx)
-		count := redis.IncrByIp(realIp)
+		fileName := ctx.Request.URL.Path
+		count := redis.IncrByIp(realIp, fileName)
 		config := util.GetIpFrequencyConfig()
 		limit := config.Limit
 		if count > limit {
