@@ -7,6 +7,13 @@ import (
 	"net/http"
 )
 
+func Response(ctx *gin.Context, data interface{}, errorCode int, errorMsg string, err error) {
+	if err != nil {
+		WrongResponse(ctx, errorCode, errorMsg)
+	}
+	SuccessResponse(ctx, data)
+}
+
 func SuccessResponse(ctx *gin.Context, data interface{})  {
 	requestId := util.GetRequestId(ctx)
 	ctx.Set("response_body", define.Response{
@@ -15,7 +22,7 @@ func SuccessResponse(ctx *gin.Context, data interface{})  {
 		Message:    "success",
 		Data:       data,
 	})
-	Response(ctx)
+	ResultResponse(ctx)
 }
 
 func WrongResponse(ctx *gin.Context, errorCode int, errorMsg string)  {
@@ -26,10 +33,10 @@ func WrongResponse(ctx *gin.Context, errorCode int, errorMsg string)  {
 		Message:    errorMsg,
 		Data:       map[string]interface{}{},
 	})
-	Response(ctx)
+	ResultResponse(ctx)
 }
 
-func Response(ctx *gin.Context)  {
+func ResultResponse(ctx *gin.Context)  {
 	if !ctx.IsAborted() {
 		result,_ := ctx.Get("response_body")
 		ctx.AbortWithStatusJSON(http.StatusOK, result)

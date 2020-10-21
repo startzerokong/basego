@@ -8,7 +8,7 @@ import (
 	"github.com/startzerokong/basego/response"
 )
 
-const salt = "let-eat-together"
+const salt = "this is a default sign salt"
 
 func BuildUrl(ctx *gin.Context) string {
 	queryString := ctx.Request.URL.Query()

@@ -28,6 +28,14 @@ func getUserFrequencyPath() ([]byte, error) {
 	return getPath("/config/userfrequency.yml")
 }
 
+func getApiPath() ([]byte, error) {
+	return getPath("/config/api.yml")
+}
+
+func getLogPath() ([]byte, error) {
+	return getPath("/config/log.yml")
+}
+
 func getPath(path string) ([]byte,error) {
 	nowPath ,_ := os.Getwd()
 	realPath := nowPath + path
@@ -53,13 +61,10 @@ func GetMemCacheConfig() *define.MemCache {
 
 	var config envConfig
 
-	err := yaml.Unmarshal(configFile, &config)
-	if err != nil {
-
-	}
+	_ = yaml.Unmarshal(configFile, &config)
 
 	retConfig := define.MemCache{}
-	err = mapstructure.Decode(config.Product, &retConfig)
+	_ = mapstructure.Decode(config.Product, &retConfig)
 
 	return &retConfig
 }
@@ -77,14 +82,10 @@ func GetRedisConfig() *define.Redis {
 
 	var config envConfig
 
-	err := yaml.Unmarshal(configFile, &config)
-
-	if err != nil {
-
-	}
+	_ = yaml.Unmarshal(configFile, &config)
 
 	retConfig := define.Redis{}
-	err = mapstructure.Decode(config.Product, &retConfig)
+	_ = mapstructure.Decode(config.Product, &retConfig)
 
 	return &retConfig
 }
@@ -102,13 +103,10 @@ func GetDbConfig() *define.Db {
 
 	var config envConfig
 
-	err := yaml.Unmarshal(configFile, &config)
-	if err != nil {
-
-	}
+	_ = yaml.Unmarshal(configFile, &config)
 
 	retConfig := define.Db{}
-	err = mapstructure.Decode(config.Product, &retConfig)
+	_ = mapstructure.Decode(config.Product, &retConfig)
 
 	return &retConfig
 }
@@ -126,13 +124,10 @@ func GetIpFrequencyConfig() *define.Ip {
 
 	var config envConfig
 
-	err := yaml.Unmarshal(configFile, &config)
-	if err != nil {
-
-	}
+	_ = yaml.Unmarshal(configFile, &config)
 
 	retConfig := define.Ip{}
-	err = mapstructure.Decode(config.Product, &retConfig)
+	_ = mapstructure.Decode(config.Product, &retConfig)
 
 	return &retConfig
 }
@@ -150,13 +145,52 @@ func GetUserFrequencyConfig() *define.User {
 
 	var config envConfig
 
-	err := yaml.Unmarshal(configFile, &config)
-	if err != nil {
-
-	}
+	_ = yaml.Unmarshal(configFile, &config)
 
 	retConfig := define.User{}
-	err = mapstructure.Decode(config.Product, &retConfig)
+	_ = mapstructure.Decode(config.Product, &retConfig)
+
+	return &retConfig
+}
+
+func GetApiConfig() *define.Api {
+	type envConfig struct {
+		Product  interface{} `yaml:"product"`
+		Preline  interface{} `yaml:"preline"`
+		Develop  interface{} `yaml:"develop"`
+		Test     interface{} `yaml:"test"`
+		UnitTest interface{} `yaml:"unit_test"`
+	}
+
+	configFile, _ := getApiPath()
+
+	var config envConfig
+
+	_ = yaml.Unmarshal(configFile, &config)
+
+	retConfig := define.Api{}
+	_ = mapstructure.Decode(config.Product, &retConfig)
+
+	return &retConfig
+}
+
+func GetLogConfig() *define.Log {
+	type envConfig struct {
+		Product  interface{} `yaml:"product"`
+		Preline  interface{} `yaml:"preline"`
+		Develop  interface{} `yaml:"develop"`
+		Test     interface{} `yaml:"test"`
+		UnitTest interface{} `yaml:"unit_test"`
+	}
+
+	configFile, _ := getLogPath()
+
+	var config envConfig
+
+	_ = yaml.Unmarshal(configFile, &config)
+
+	retConfig := define.Log{}
+	_ = mapstructure.Decode(config.Product, &retConfig)
 
 	return &retConfig
 }
